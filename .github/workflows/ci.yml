@@ -1,0 +1,34 @@
+name: Conditional CI
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - '.github/**'
+  workflow_dispatch:
+    inputs:
+      result:
+        description: Controlled test result
+        type: choice
+        options: [success, failure]
+        default: success
+      delay:
+        description: Delay in seconds
+        type: choice
+        options: ['0', '45', '90']
+        default: '0'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlled test
+        env:
+          RESULT: ${{ inputs.result || 'success' }}
+          DELAY: ${{ inputs.delay || '0' }}
+        run: |
+          sleep "$DELAY"
+          test "$RESULT" = success
+          test "$(cat src/example.txt)" = success

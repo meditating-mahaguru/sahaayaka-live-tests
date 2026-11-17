@@ -1,0 +1,15 @@
+{
+  "approve": true,
+  "allowEmpty": true,
+  "settleSeconds": 10,
+  "timeoutSeconds": 180,
+  "requiredChecks": [
+    {
+      "name": "test",
+      "paths": [
+        "src/**",
+        ".github/**"
+      ]
+    }
+  ]
+}
